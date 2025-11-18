@@ -4,6 +4,7 @@ export interface App {
   description: string;
   category: string;
   icon: string;
+  demoLink?: string;
   featured?: boolean;
   badge?: string;
   features?: string[];

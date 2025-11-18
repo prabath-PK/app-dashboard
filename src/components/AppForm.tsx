@@ -41,6 +41,7 @@ export const AppForm = ({ app, onSave, onCancel }: AppFormProps) => {
     description: app?.description || "",
     category: app?.category || "",
     icon: app?.icon || "fa-cash-register",
+    demoLink: app?.demoLink || "",
     badge: app?.badge || "",
     overview: app?.overview || "",
     features: app?.features || [""],
@@ -53,6 +54,7 @@ export const AppForm = ({ app, onSave, onCancel }: AppFormProps) => {
       ...formData,
       features: filteredFeatures.length > 0 ? filteredFeatures : undefined,
       badge: formData.badge || undefined,
+      demoLink: formData.demoLink || undefined,
       overview: formData.overview || undefined,
       id: app?.id,
     });
@@ -115,6 +117,17 @@ export const AppForm = ({ app, onSave, onCancel }: AppFormProps) => {
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           rows={2}
           required
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="demoLink">Demo Link</Label>
+        <Input
+          id="demoLink"
+          type="url"
+          value={formData.demoLink}
+          onChange={(e) => setFormData({ ...formData, demoLink: e.target.value })}
+          placeholder="https://example.com/demo"
         />
       </div>
 
