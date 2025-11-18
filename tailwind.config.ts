@@ -57,6 +57,11 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        teal: "hsl(var(--teal))",
+        "teal-hover": "hsl(var(--teal-hover))",
+        purple: "hsl(var(--purple))",
+        "dark-card": "hsl(var(--dark-card))",
+        "dark-bg": "hsl(var(--dark-bg))",
       },
       borderRadius: {
         lg: "var(--radius)",
