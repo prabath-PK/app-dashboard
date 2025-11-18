@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import { Search, Lock } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -9,16 +9,16 @@ interface HeaderProps {
   activeFilter: string;
   onFilterChange: (filter: string) => void;
   showDashboardLink?: boolean;
+  onDashboardClick?: () => void;
 }
-
-const categories = ["All", "POS", "Booking", "Hospitality", "Retail", "Tools"];
 
 export const Header = ({
   searchQuery,
   onSearchChange,
   activeFilter,
   onFilterChange,
-  showDashboardLink = false
+  showDashboardLink = false,
+  onDashboardClick
 }: HeaderProps) => {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
@@ -31,11 +31,14 @@ export const Header = ({
               </div>
             </Link>
             {showDashboardLink && (
-              <Link to="/dashboard">
-                <Button variant="outline" size="sm" className="lg:hidden">
-                  Dashboard
-                </Button>
-              </Link>
+              <Button 
+                onClick={onDashboardClick}
+                className="lg:hidden bg-primary hover:bg-teal-hover text-primary-foreground font-semibold px-6"
+                size="sm"
+              >
+                <Lock className="w-4 h-4 mr-2" />
+                Dashboard
+              </Button>
             )}
           </div>
           
@@ -44,37 +47,26 @@ export const Header = ({
           </div>
 
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <div className="relative">
+            <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 type="text"
                 placeholder="Search apps..."
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
-                className="pl-9 w-full sm:w-[300px] bg-muted/50 border-border rounded-full"
+                className="pl-9 w-full bg-muted/50 border-border rounded-full"
               />
             </div>
 
-            <div className="flex gap-2 flex-wrap">
-              {categories.map((category) => (
-                <Button
-                  key={category}
-                  variant={activeFilter === category ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => onFilterChange(category)}
-                  className="rounded-full"
-                >
-                  {category}
-                </Button>
-              ))}
-            </div>
-
             {showDashboardLink && (
-              <Link to="/dashboard" className="hidden lg:block">
-                <Button variant="outline" size="sm">
-                  Dashboard
-                </Button>
-              </Link>
+              <Button 
+                onClick={onDashboardClick}
+                className="hidden lg:flex bg-primary hover:bg-teal-hover text-primary-foreground font-semibold px-8 h-11 text-base"
+                size="lg"
+              >
+                <Lock className="w-5 h-5 mr-2" />
+                Dashboard
+              </Button>
             )}
           </div>
         </div>

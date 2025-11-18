@@ -1,18 +1,34 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { App } from "@/types/app";
 import { Header } from "@/components/Header";
+import { CategoryBar } from "@/components/CategoryBar";
 import { AppCard } from "@/components/AppCard";
 import { AppDetailsModal } from "@/components/AppDetailsModal";
+import { PasswordDialog } from "@/components/PasswordDialog";
 import { Flame, Grid3x3 } from "lucide-react";
 
 interface StorefrontProps {
   apps: App[];
 }
 
+const categories = ["All", "POS", "Booking", "Hospitality", "Retail", "Tools"];
+
 export const Storefront = ({ apps }: StorefrontProps) => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
   const [selectedApp, setSelectedApp] = useState<App | null>(null);
+  const [showPasswordDialog, setShowPasswordDialog] = useState(false);
+
+  const handleDashboardClick = () => {
+    setShowPasswordDialog(true);
+  };
+
+  const handlePasswordSuccess = () => {
+    setShowPasswordDialog(false);
+    navigate("/dashboard");
+  };
 
   const filteredApps = apps.filter((app) => {
     const matchesSearch =
@@ -32,6 +48,13 @@ export const Storefront = ({ apps }: StorefrontProps) => {
         activeFilter={activeFilter}
         onFilterChange={setActiveFilter}
         showDashboardLink={true}
+        onDashboardClick={handleDashboardClick}
+      />
+
+      <CategoryBar
+        categories={categories}
+        activeCategory={activeFilter}
+        onCategoryChange={setActiveFilter}
       />
 
       <main className="container mx-auto px-4 py-10">
@@ -112,6 +135,12 @@ export const Storefront = ({ apps }: StorefrontProps) => {
         app={selectedApp}
         isOpen={!!selectedApp}
         onClose={() => setSelectedApp(null)}
+      />
+
+      <PasswordDialog
+        isOpen={showPasswordDialog}
+        onClose={() => setShowPasswordDialog(false)}
+        onSuccess={handlePasswordSuccess}
       />
     </div>
   );
