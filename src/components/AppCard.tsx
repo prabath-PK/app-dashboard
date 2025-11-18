@@ -37,7 +37,11 @@ export const AppCard = ({ app, onViewDetails }: AppCardProps) => {
 
       {/* Actions */}
       <div className="flex gap-3">
-        <Button className="flex-1 rounded-full bg-primary hover:bg-teal-hover text-primary-foreground">
+        <Button 
+          className="flex-1 rounded-full bg-primary hover:bg-teal-hover text-primary-foreground"
+          onClick={() => app.demoLink && window.open(app.demoLink, '_blank')}
+          disabled={!app.demoLink}
+        >
           <PlayCircle className="w-4 h-4 mr-2" />
           Demo
         </Button>
