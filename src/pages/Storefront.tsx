@@ -12,9 +12,9 @@ interface StorefrontProps {
   apps: App[];
 }
 
-const categories = ["All", "POS", "Booking", "Hospitality", "Retail", "Tools"];
-
 export const Storefront = ({ apps }: StorefrontProps) => {
+  const uniqueCategories = ["All", ...new Set(apps.map(app => app.category))];
+  const categories = uniqueCategories;
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
