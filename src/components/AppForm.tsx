@@ -19,7 +19,7 @@ interface AppFormProps {
   onCancel: () => void;
 }
 
-const categories = ["POS", "Booking", "Hospitality", "Retail", "Tools"];
+const suggestedCategories = ["POS", "Booking", "Hospitality", "Retail", "Tools"];
 const icons = [
   "fa-cash-register",
   "fa-calendar-check",
@@ -90,22 +90,19 @@ export const AppForm = ({ app, onSave, onCancel }: AppFormProps) => {
 
         <div className="space-y-2">
           <Label htmlFor="category">Category *</Label>
-          <Select
+          <Input
+            id="category"
             value={formData.category}
-            onValueChange={(value) => setFormData({ ...formData, category: value })}
+            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+            placeholder="Enter category (e.g., POS, Booking, Retail)"
+            list="category-suggestions"
             required
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select category" />
-            </SelectTrigger>
-            <SelectContent>
-              {categories.map((cat) => (
-                <SelectItem key={cat} value={cat}>
-                  {cat}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          />
+          <datalist id="category-suggestions">
+            {suggestedCategories.map((cat) => (
+              <option key={cat} value={cat} />
+            ))}
+          </datalist>
         </div>
       </div>
 

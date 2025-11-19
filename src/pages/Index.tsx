@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { App } from "@/types/app";
 import { initialApps } from "@/data/initialApps";
 import { Storefront } from "./Storefront";
 import { Dashboard } from "./Dashboard";
 
+const STORAGE_KEY = "grobern_apps";
+
 const Index = () => {
-  const [apps, setApps] = useState<App[]>(initialApps);
+  const [apps, setApps] = useState<App[]>(() => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : initialApps;
+  });
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(apps));
+  }, [apps]);
 
   const handleAddApp = (appData: Omit<App, "id">) => {
     const newApp: App = {
